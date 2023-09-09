@@ -1,4 +1,4 @@
-This Program Written in Dev c++ IDE 
+This Program Written in Dev C++ IDE 
 
 This Is Basic Car Rental Program which will Show need Your Name , Car Name (Which have), Number of Days For Rent 
 
