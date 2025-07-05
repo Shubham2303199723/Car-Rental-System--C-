@@ -17,8 +17,8 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.SFTP_PRIVATE_KEY }}
-        name: id_rsa
-        known_hosts: 'just-a-placeholder'  # Required, even if SFTP only
+        name: id_rsa                      # key will be saved as ~/.ssh/id_rsa
+        known_hosts: 'just-a-placeholder' # required even if not used
         if_key_exists: replace
 
     - name: Deploy to server via SFTP
@@ -27,6 +27,6 @@ jobs:
         username: ${{ secrets.SFTP_USER }}
         server: ${{ secrets.SFTP_HOST }}
         port: ${{ secrets.SFTP_PORT }}
-        local_path: './'
-        remote_path: '/uploads'
+        local_path: './'                  # or your build folder like 'dist'
+        remote_path: '/uploads'           # target folder on remote server
         sftp_only: true
