@@ -19,7 +19,12 @@ jobs:
         username: ${{ secrets.SFTP_USER }}
         server: ${{ secrets.SFTP_HOST }}
         port: ${{ secrets.SFTP_PORT }}
-        privateKey: ${{ secrets.SFTP_PRIVATE_KEY }}
-        local_path: './'  # Folder to upload
-        remote_path: '/uploads'  # Path on server
-        sftp_only: true
+
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2  
+      with:
+        key:
+          privateKey: ${{ secrets.SFTP_PRIVATE_KEY }}
+          local_path: './'  # Folder to upload
+          remote_path: '/uploads'  # Path on server
+          sftp_only: true
