@@ -13,18 +13,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SFTP_PRIVATE_KEY }}
+        name: id_rsa
+        known_hosts: 'just-a-placeholder'  # Required, even if SFTP only
+        if_key_exists: replace
+
     - name: Deploy to server via SFTP
       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
         username: ${{ secrets.SFTP_USER }}
         server: ${{ secrets.SFTP_HOST }}
         port: ${{ secrets.SFTP_PORT }}
-
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2  
-      with:
-        key:
-          privateKey: ${{ secrets.SFTP_PRIVATE_KEY }}
-          local_path: './'  # Folder to upload
-          remote_path: '/uploads'  # Path on server
-          sftp_only: true
+        local_path: './'
+        remote_path: '/uploads'
+        sftp_only: true
