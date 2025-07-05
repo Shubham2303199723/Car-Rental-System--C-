@@ -13,19 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy to server via SFTP
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+    - name: Deploy via SFTP
+      uses: pressidium/lftp-deploy-action@v1
       with:
+        host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USER }}
-        server: ${{ secrets.SFTP_HOST }}
-        port: ${{ secrets.SFTP_PORT }}
-
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2  
-      with:
-        key:
-          privateKey: ${{ secrets.SFTP_PRIVATE_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-          local_path: './'  # Folder to upload
-          remote_path: 'uploads'  # Path on server
-          sftp_only: true
+        password: ${{ secrets.SFTP_PASSWORD }}
+        localDir: '.'
+        remoteDir: '/home/admin/uploads'
